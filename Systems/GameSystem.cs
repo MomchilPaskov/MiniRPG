@@ -5,11 +5,18 @@ namespace MiniRPG;
 public class GameSystem
 {
 
+    public void StartGame()
+    {
+        Console.Clear();
+        Console.WriteLine("Welcome to MiniRPG!");
+    }
+
     public string SetName()
     {
         Console.WriteLine("What is your name?");
         string? name = Console.ReadLine();
         return string.IsNullOrWhiteSpace(name) ? "Hero" : name.Trim();
+        Console.WriteLine($"Hello, {name}!");
     }
 
     public Character SelectCharacter(string name)

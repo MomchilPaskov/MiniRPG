@@ -1,6 +1,6 @@
 namespace MiniRPG;
 
-public abstract class Enemy
+public abstract class Enemy : ICombatant
 {
     public string Name { get; set; }
     
@@ -9,6 +9,8 @@ public abstract class Enemy
     public int CurrentHealth { get; private set; }
     
     public int AttackPower { get; private set; }
+
+    public bool IsAlive => CurrentHealth > 0;
 
     public Enemy(string name, int maxHealth, int attackPower)
     {
@@ -20,9 +22,12 @@ public abstract class Enemy
 
     public void TakeDamage(int damage)
     {
-        if (damage >= 0)
-            CurrentHealth -= damage;
-        else
+        if (damage < 0)
+        {
             Console.WriteLine("You can't take negative damage!");
+            return;
+        }
+        
+        CurrentHealth = Math.Max(0, CurrentHealth - damage);
     }
 }
