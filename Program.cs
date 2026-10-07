@@ -8,14 +8,14 @@ class Program
     {
         GameSystem gs = new GameSystem();
         CombatSystem cs = new CombatSystem();
-        Enemy ghost = new Ghost();
-        
-        Console.WriteLine("Welcome to MiniRPG!");
+        EnemyFactory ef = new EnemyFactory();
 
+        Enemy enemy = ef.Factory();
+
+        gs.StartGame();
         string name = gs.SetName();
-        Console.WriteLine($"Hello, {name}!");
         Character player = gs.SelectCharacter(name);
         
-        cs.StartFight(player, ghost);
+        cs.StartFight(player, enemy);
     }
 }
