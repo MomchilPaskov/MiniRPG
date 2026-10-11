@@ -1,4 +1,4 @@
-using MiniRPG;
+namespace MiniRPG;
 
 public interface IHealable
 {
