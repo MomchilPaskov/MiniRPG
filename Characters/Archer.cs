@@ -8,7 +8,7 @@ public class Archer : Character
     { 
         SetStats(
             maxHealth: 110,
-            attackPower: 10,
+            baseAttackPower: 10,
             defendPower: 5,
             healPower: 20);
     }

@@ -5,23 +5,25 @@ public abstract class Character : IPlayable
     public string Name { get; set; }
     public int MaxHealth { get; private set; }
     public int CurrentHealth { get; private set; }
-    public int AttackPower { get; private set; }
+    public int BaseAttackPower { get; private set; }
     public int DefendPower { get; private set; }
     public int HealPower { get; private set; }
     public bool IsAlive => CurrentHealth > 0;
     public int Gold { get;  private set; }
     public bool IsDefending {get; private set;}
+    public double AttackPowerMultiplier {get; private set;} = 1.0;
+    public double TotalAttackPower => BaseAttackPower * AttackPowerMultiplier;
 
     protected Character(string name)
     {
         Name = name;
     }
 
-    protected void SetStats(int maxHealth, int attackPower, int defendPower, int healPower)
+    protected void SetStats(int maxHealth, int baseAttackPower, int defendPower, int healPower)
     {
         MaxHealth = maxHealth;
         CurrentHealth = maxHealth;
-        AttackPower = attackPower;
+        BaseAttackPower = baseAttackPower;
         DefendPower = defendPower;
         HealPower = healPower;
     }
@@ -73,10 +75,12 @@ public abstract class Character : IPlayable
         return true;
     }
 
-    public void AddStats(int damage, int defense, int heal)
+    public void AddStats(int damage, int defense, int heal, double dmgMultiplier)
     {
-        AttackPower += damage;
+        BaseAttackPower += damage;
         DefendPower += defense;
         HealPower += heal;
+        AttackPowerMultiplier += dmgMultiplier;
     }
+    
 }

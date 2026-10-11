@@ -8,7 +8,7 @@ public class Mage : Character
     { 
         SetStats(
             maxHealth: 80,
-            attackPower: 30,
+            baseAttackPower: 30,
             defendPower: 5,
             healPower: 20);
     }
