@@ -15,7 +15,7 @@ public class ForgeEncounter : IEncounter
         {
             Console.WriteLine("You can upgrade your:\n" +
                               "(Click a number)\n" +
-                              $"1 - Damage ({player.AttackPower} -> {player.AttackPower + dmgUpgrade})\n" +
+                              $"1 - Damage ({player.BaseAttackPower} -> {player.BaseAttackPower + dmgUpgrade})\n" +
                               $"2 - Defense ({player.DefendPower} -> {player.DefendPower + defUpgrade})\n" +
                               $"3 - Heal ({player.HealPower} -> {player.HealPower + healUpgrade})");
 
@@ -23,13 +23,13 @@ public class ForgeEncounter : IEncounter
             switch (key)
             {
                 case '1':
-                    player.AddStats(dmgUpgrade, 0, 0);
+                    player.AddStats(dmgUpgrade, 0, 0, 0);
                     return;
                 case '2':
-                    player.AddStats(0, defUpgrade, 0);
+                    player.AddStats(0, defUpgrade, 0, 0);
                     return;
                 case '3':
-                    player.AddStats(0, 0, healUpgrade);
+                    player.AddStats(0, 0, healUpgrade, 0);
                     return;
                 default:
                     Console.Clear();
@@ -45,7 +45,7 @@ public class ForgeEncounter : IEncounter
         Console.WriteLine("You went to the forge.");
         while (true)
         {
-            Console.WriteLine("Do you want an upgrade?");
+            Console.WriteLine($"Do you want an upgrade?       Your gold: {player.Gold}");
             Console.WriteLine("Yes (-200gold)");
             Console.WriteLine("No (Return)");
             string? choice = Console.ReadLine()?.ToLower().Trim();
@@ -54,6 +54,7 @@ public class ForgeEncounter : IEncounter
                 if (player.TrySpendingGold(200))
                 {
                     ForgeStat(player);
+                    Console.WriteLine($"Your gold: {player.Gold}");
                     return;
                 }
                 else

@@ -70,7 +70,7 @@ public class BattleEncounter : IEncounter
             }
             
             cs.Attack(enemy, player); 
-            Console.WriteLine($"Enemy attacked you for {enemy.AttackPower}hp");
+            Console.WriteLine($"Enemy attacked you for {enemy.BaseAttackPower}hp");
 
             if (!player.IsAlive) 
             { 
