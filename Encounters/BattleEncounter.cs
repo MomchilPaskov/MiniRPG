@@ -32,6 +32,11 @@ public class BattleEncounter : IEncounter
                     cs.Attack(player, enemy);
                     playerActed = true;
                     break;
+                case "defend":
+                    Console.WriteLine($"You will defend the next attack for {player.DefendPower}");
+                    cs.Defend(player);
+                    playerActed = true;
+                    break;
                 case "heal":
                     if (player.CurrentHealth == player.MaxHealth)
                     {
