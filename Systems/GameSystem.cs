@@ -1,5 +1,3 @@
-using System.ComponentModel.Design;
-
 namespace MiniRPG;
 
 public class GameSystem
@@ -15,7 +13,11 @@ public class GameSystem
 
         while (player.IsAlive)
         {
-            IEncounter encounter = ChooseEncounter();
+            IEncounter? encounter = ChooseEncounter();
+            if (encounter == null)
+            {
+                break;
+            }
             encounter.Run(player);
         }
     }
@@ -34,20 +36,20 @@ public class GameSystem
         while (true)
         {
             Console.WriteLine("Pick a character:(Click a number))");
-            Console.WriteLine("1 - Warrior,\n2 - Mage,\n3 - Archer");
+            Console.WriteLine("1 - Warrior | 2 - Mage | 3 - Archer");
             char key = Console.ReadKey().KeyChar;
 
             switch (key)
             {
                 case '1':
                     Console.WriteLine("You selected warrior!");
-                    return new Warrior(name, 100, 20);
+                    return new Warrior(name);
                 case '2':
                     Console.WriteLine("You selected warrior!");
-                    return new Mage(name, 80, 30);
+                    return new Mage(name);
                 case '3':
                     Console.WriteLine("You selected archer!");
-                    return new Archer(name, 110, 10);
+                    return new Archer(name);
                 default:
                     Console.WriteLine(key + "it's not a valid number");
                     break;
@@ -55,14 +57,14 @@ public class GameSystem
         }
     }
 
-    public IEncounter ChooseEncounter()
+    public IEncounter? ChooseEncounter()
     {
         Console.Clear();
         while (true)
         {
             Console.WriteLine("Where to go?");
             Console.WriteLine("(Click the number):");
-            Console.WriteLine("1. Fight an enemy\n2. Forge your abilities.\n3. Shop");
+            Console.WriteLine("1 - Fight an enemy | 2 - Forge your abilities. | 3 - Shop | 0 - Quit");
         
             char key = Console.ReadKey().KeyChar;
             
@@ -74,6 +76,8 @@ public class GameSystem
                     return new ForgeEncounter();
                 case '3':
                     return new ShopEncounter();
+                case '0':
+                    return null;
                 default:
                     Console.Clear();
                     Console.WriteLine(key + " is not a valid key!");
