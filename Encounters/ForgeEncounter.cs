@@ -7,29 +7,34 @@ public class ForgeEncounter : IEncounter
 
     private void ForgeStat(IPlayable player)
     {
-        int dmgUpgrade = Random.Shared.Next(1, 20 + 1);
+        int dmgUpgrade = Random.Shared.Next(1, 10 + 1);
         int defUpgrade = Random.Shared.Next(1, 10 + 1);
-        int healUpgrade = Random.Shared.Next(1, 5 + 1);
+        int healUpgrade = Random.Shared.Next(1, 10 + 1);
+        int mhUpgrade = Random.Shared.Next(1, 10 + 1);
 
         while (true)
         {
             Console.WriteLine("You can upgrade your:\n" +
                               "(Click a number)\n" +
-                              $"1 - Damage ({player.BaseAttackPower} -> {player.BaseAttackPower + dmgUpgrade})\n" +
-                              $"2 - Defense ({player.DefendPower} -> {player.DefendPower + defUpgrade})\n" +
-                              $"3 - Heal ({player.HealPower} -> {player.HealPower + healUpgrade})");
+                              $"1 - Max Health {player.MaxHealth} -> {player.MaxHealth + mhUpgrade}\n" +
+                              $"2 - Damage ({player.BaseAttackPower} -> {player.BaseAttackPower + dmgUpgrade})\n" +
+                              $"3 - Defense ({player.DefendPower} -> {player.DefendPower + defUpgrade})\n" +
+                              $"4 - Heal ({player.HealPower} -> {player.HealPower + healUpgrade})");
 
             char key = Console.ReadKey(true).KeyChar;
             switch (key)
             {
                 case '1':
-                    player.AddStats(dmgUpgrade, 0, 0, 0);
+                    player.AddStats(0, 0, defUpgrade, 0, mhUpgrade);
                     return;
                 case '2':
-                    player.AddStats(0, defUpgrade, 0, 0);
+                    player.AddStats(dmgUpgrade, 0, 0, 0, 0);
                     return;
                 case '3':
-                    player.AddStats(0, 0, healUpgrade, 0);
+                    player.AddStats(0, defUpgrade, 0, 0, 0);
+                    return;
+                case '4':
+                    player.AddStats(0, 0, healUpgrade, 0, 0);
                     return;
                 default:
                     Console.Clear();

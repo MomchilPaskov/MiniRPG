@@ -75,12 +75,13 @@ public abstract class Character : IPlayable
         return true;
     }
 
-    public void AddStats(int damage, int defense, int heal, double dmgMultiplier)
+    public void AddStats(int damage, int defense, int heal, double dmgMultiplier, int maxHealth)
     {
         BaseAttackPower += damage;
         DefendPower += defense;
         HealPower += heal;
         AttackPowerMultiplier += dmgMultiplier;
+        MaxHealth += maxHealth;
     }
     
 }
