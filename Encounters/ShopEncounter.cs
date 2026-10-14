@@ -45,6 +45,7 @@ public class ShopEncounter : IEncounter
         {
             string boughtName = stock[index].Name;
             stock[index].Apply(player);
+            stock[index].MarkPurchased();
             stock.RemoveAt(index);
             Console.WriteLine($"You bought {boughtName}. Press any key to continue.");
         }
@@ -59,9 +60,10 @@ public class ShopEncounter : IEncounter
     public void Run(IPlayable player)
     {
         List<Item> stock = new List<Item>(ItemCatalog.All)
+            .Where(i => !i.isPurchased)
             .OrderBy(_ => Random.Shared.Next())
             .Take(3)
-            .ToList();
+            .ToList();;
         while (BuyItem(player, stock))
         {
         }
