@@ -1,3 +1,6 @@
+using System.Globalization;
+using System.Reflection.Metadata.Ecma335;
+
 namespace MiniRPG;
 
 public class ShopEncounter : IEncounter
@@ -5,40 +8,62 @@ public class ShopEncounter : IEncounter
     public string Name => "Shop";
     public string Description => "";
 
-    public void BuyItem(IPlayable player)
+    public bool BuyItem(IPlayable player, List<Item> stock)
     {
+        Console.Clear();
+        
+        if (stock.Count == 0)
+        {
+            Console.WriteLine("The shop is empty.");
+            Console.ReadKey(true);
+            return false;
+        }
         Console.WriteLine("You are in the shop.");
         Console.WriteLine($"You have {player.Gold}gold");
         Console.WriteLine("Choose an item to buy.");
         Console.WriteLine("(Click the number!)");
 
-        Console.WriteLine("1 - Item1({price}gold)");
-        Console.WriteLine("2 - Item2({price}gold)");
-        Console.WriteLine("3 - Item3({price}gold)");
-        Console.WriteLine("0 - Leave");
-            
-        char key = Console.ReadKey(true).KeyChar;
-        switch (key)
+        for (int i = 0; i < stock.Count; i++)
         {
-            case '1':
-                break;
-            case '2':
-                break;
-            case '3':
-                break;
-            case '0':
-                return;
-            default:
-                Console.WriteLine("That is not a valid option.");
-                break;
+            Console.WriteLine($"{i+1} - \"{stock[i].Name}\" {stock[i].Description}({stock[i].Price}gold)");
         }
+
+        Console.WriteLine("0 - Leave");
+        
+        char key = Console.ReadKey(true).KeyChar;
+
+        if (key == '0')
+            return false;
+
+        int index = key - '1';
+
+        if (index < 0 || index >= stock.Count)
+        {
+            Console.WriteLine("That is not a valid option.");
+        }
+        else if (player.TrySpendingGold(stock[index].Price))
+        {
+            string boughtName = stock[index].Name;
+            stock[index].Apply(player);
+            stock.RemoveAt(index);
+            Console.WriteLine($"You bought {boughtName}. Press any key to continue.");
+        }
+        else
+        {
+            Console.WriteLine("Not enough gold. Press any key to continue.");
+            Console.ReadKey(true);
+        }
+        return true;
     }
-    
+
     public void Run(IPlayable player)
     {
-        while (true)
+        List<Item> stock = new List<Item>(ItemCatalog.All)
+            .OrderBy(_ => Random.Shared.Next())
+            .Take(3)
+            .ToList();
+        while (BuyItem(player, stock))
         {
-            BuyItem(player);
         }
     }
 }
