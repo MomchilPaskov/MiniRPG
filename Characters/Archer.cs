@@ -9,8 +9,8 @@ public class Archer : Character
         SetStats(
             maxHealth: 110,
             baseAttackPower: 10,
-            defendPower: 5,
-            healPower: 20);
+            defendPower: 45,
+            healPower: 45);
     }
     
 }

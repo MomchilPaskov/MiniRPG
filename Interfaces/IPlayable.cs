@@ -9,4 +9,6 @@ public interface IPlayable : IHealable, ICombatant
     void StartDefending (IPlayable user);
     int HealPower { get; }
     void AddStats(int damage, int defense, int heal, double dmgMultiplier, int maxHealth);
+    void RoundWon();
+    int RoundCount { get; }
 }

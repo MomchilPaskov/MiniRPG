@@ -8,7 +8,7 @@ public class Warrior : Character
         SetStats(
             maxHealth: 100,
             baseAttackPower: 20,
-            defendPower: 5,
-            healPower: 20);
+            defendPower: 35,
+            healPower: 35);
     }
 }

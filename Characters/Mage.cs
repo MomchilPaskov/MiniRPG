@@ -9,7 +9,7 @@ public class Mage : Character
         SetStats(
             maxHealth: 80,
             baseAttackPower: 30,
-            defendPower: 5,
+            defendPower: 25,
             healPower: 20);
     }
 }

@@ -11,7 +11,7 @@ public class GameSystem
         string name = SetName();
         IPlayable player = SelectCharacter(name);
 
-        while (player.IsAlive)
+        while (player.IsAlive && player.RoundCount < 25)
         {
             IEncounter? encounter = ChooseEncounter();
             if (encounter == null)
@@ -20,6 +20,12 @@ public class GameSystem
             }
             encounter.Run(player);
         }
+        
+        if(player.IsAlive)
+            Console.WriteLine("Congratulations! You won!");
+        else
+            Console.WriteLine("Game Over!");
+        Console.ReadKey(true);
     }
 
     public string SetName()

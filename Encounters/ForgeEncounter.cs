@@ -25,7 +25,7 @@ public class ForgeEncounter : IEncounter
             switch (key)
             {
                 case '1':
-                    player.AddStats(0, 0, defUpgrade, 0, mhUpgrade);
+                    player.AddStats(0, 0, 0, 0, mhUpgrade);
                     return;
                 case '2':
                     player.AddStats(dmgUpgrade, 0, 0, 0, 0);

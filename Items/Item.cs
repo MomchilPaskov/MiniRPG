@@ -6,6 +6,8 @@ public class Item
     public string Description {get; }
     public int Price {get; }
     public Action<IPlayable> Apply{get; }
+    public bool isPurchased { get; private set; }
+    public void MarkPurchased() => isPurchased = true;
 
     public Item(string name, string description, int price, Action<IPlayable> apply)
     {

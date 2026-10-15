@@ -9,7 +9,7 @@ public class BattleEncounter : IEncounter
         EnemyFactory ef = new EnemyFactory();
         CombatSystem cs = new CombatSystem();
 
-        Enemy enemy = ef.Factory();
+        Enemy enemy = ef.Factory(player);
         Console.Clear();
         Console.WriteLine($"A {enemy.Name} is trying to fight...");
 
@@ -25,20 +25,20 @@ public class BattleEncounter : IEncounter
             string healStatus = healCooldown > 0 ? $"{healCooldown} turns left" : "ready";
             string defStatus = defCooldown > 0 ? $"{defCooldown} turns left" : "ready";
             
-            Console.WriteLine($"Attack | Defend({defStatus}) | Heal({healStatus}).");
-            string? action = Console.ReadLine()?.Trim().ToLower();
+            Console.WriteLine($"1 - Attack | 2 - Defend({defStatus}) | 3 - Heal({healStatus}).");
+            char action = Console.ReadKey().KeyChar;
             Console.Clear();
 
             bool playerActed = false;
             
             switch (action)
             {
-                case "attack":
+                case '1':
                     Console.WriteLine($"You attacked a {enemy.Name}!");
                     cs.Attack(player, enemy);
                     playerActed = true;
                     break;
-                case "defend":
+                case '2':
                     if (defCooldown <= 0)
                     {
                         Console.WriteLine($"You will defend the next attack for {player.DefendPower}");
@@ -52,7 +52,7 @@ public class BattleEncounter : IEncounter
                         Console.WriteLine($"This ability is on cooldown for {defCooldown} turns.");
                         break;
                     }
-                case "heal":
+                case '3':
                     if (player.CurrentHealth == player.MaxHealth)
                     {
                         Console.WriteLine("You can't heal when you are at max health!");
@@ -92,8 +92,20 @@ public class BattleEncounter : IEncounter
             
             if (!enemy.IsAlive)
             {
-                Console.WriteLine("You won!");
-                player.AddGold(100);
+                Console.WriteLine($"You defeated the {enemy.Name}! Press any key to continue...");
+                if (player.RoundCount % 8 == 7)
+                    player.AddGold(400);
+                else if (player.RoundCount == 24)
+                {
+                    Console.WriteLine($"Congratulations! You defeated the Final Boss {enemy.Name}!");
+                    player.RoundWon();
+                    return;
+                }
+                else
+                    player.AddGold(200);
+                
+                player.RoundWon();
+                Console.ReadKey();
                 return;
             }
             

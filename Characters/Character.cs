@@ -11,9 +11,23 @@ public abstract class Character : IPlayable
     public bool IsAlive => CurrentHealth > 0;
     public int Gold { get;  private set; }
     public bool IsDefending {get; private set;}
+    public bool IsEmpowered { get; private set; }
+
+    public bool ConsumeEmpower()
+    {
+        if (IsEmpowered)
+        {
+            IsEmpowered = false;
+            return true;
+        }
+
+        return false;
+    }
+
     public double AttackPowerMultiplier {get; private set;} = 1.0;
     public double TotalAttackPower => BaseAttackPower * AttackPowerMultiplier;
-
+    public int RoundCount { get; private set; }
+    
     protected Character(string name)
     {
         Name = name;
@@ -60,6 +74,7 @@ public abstract class Character : IPlayable
     public void StartDefending(IPlayable user)
     {
         IsDefending = true;
+        IsEmpowered = true;
     }
 
     public void AddGold(int gold)
@@ -82,6 +97,12 @@ public abstract class Character : IPlayable
         HealPower += heal;
         AttackPowerMultiplier += dmgMultiplier;
         MaxHealth += maxHealth;
+        CurrentHealth += maxHealth;
+    }
+
+    public void RoundWon()
+    {
+        RoundCount++;
     }
     
 }

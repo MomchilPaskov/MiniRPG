@@ -4,7 +4,13 @@ public class CombatSystem
 {
     public void Attack(ICombatant attacker, ICombatant defender)
     {
-        defender.TakeDamage((int)Math.Round(attacker.TotalAttackPower, MidpointRounding.AwayFromZero));
+        double damageDealt = attacker.TotalAttackPower;
+
+        if (attacker.ConsumeEmpower())
+        {
+            damageDealt *= 2;
+        }
+        defender.TakeDamage((int)Math.Round(damageDealt, MidpointRounding.AwayFromZero));
     }
     
 
@@ -15,6 +21,8 @@ public class CombatSystem
 
     public void Defend(IPlayable user)
     {
+        Console.WriteLine("Your next attack will be empowered! (x2)");
         user.StartDefending(user);
+        
     }
 }

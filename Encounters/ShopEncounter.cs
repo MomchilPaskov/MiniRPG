@@ -18,10 +18,7 @@ public class ShopEncounter : IEncounter
             Console.ReadKey(true);
             return false;
         }
-        Console.WriteLine("You are in the shop.");
         Console.WriteLine($"You have {player.Gold}gold");
-        Console.WriteLine("Choose an item to buy.");
-        Console.WriteLine("(Click the number!)");
 
         for (int i = 0; i < stock.Count; i++)
         {
@@ -62,7 +59,7 @@ public class ShopEncounter : IEncounter
         List<Item> stock = new List<Item>(ItemCatalog.All)
             .Where(i => !i.isPurchased)
             .OrderBy(_ => Random.Shared.Next())
-            .Take(3)
+            .Take(5)
             .ToList();;
         while (BuyItem(player, stock))
         {
