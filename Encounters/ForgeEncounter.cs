@@ -36,10 +36,6 @@ public class ForgeEncounter : IEncounter
                 case '4':
                     player.AddStats(0, 0, healUpgrade, 0, 0);
                     return;
-                case '6':
-                    player.AddStats(1000, 1000, 1000, 1000, 1000);
-                    player.AddGold(10000);
-                    return;
                 default:
                     Console.Clear();
                     Console.WriteLine($"{key} is not a valid key.");
@@ -77,11 +73,6 @@ public class ForgeEncounter : IEncounter
             }
             else if (choice == "no")
             {
-                return;
-            }
-            else if (choice == "admin")
-            {
-                ForgeStat(player);
                 return;
             }
             else
